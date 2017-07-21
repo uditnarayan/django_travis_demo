@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+    db:
+        image: postgres:9.6.3-alpine
+        restart: always
+        container_name: django_travis_docker_demo_db
+    web:
+        build: .
+        image: django_travis_docker_demo:1.0
+        container_name: django_travis_docker_demo_web
+        volumes:
+            - .:/app
+        ports:
+            - 8000:8000
+        depends_on:
+            - db
+        restart: always
+        entrypoint: ./entrypoint.sh
